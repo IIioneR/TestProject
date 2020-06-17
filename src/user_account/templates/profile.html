@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="media">
+        <div class="img-circle.vert">
+            <img class="rounded-circle p-1 m-1" width="300" height="300"  src="{{ user.image.url }}">
+        </div>
+        <div class="media-body  p-3 m-3">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <h3 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h3>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            {% csrf_token %}
+
+            {{ form|crispy }}
+
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="{% url 'index' %}" class="btn btn-light">Cancel</a>
+    </form>
+
+{% endblock %}
