@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <form method="post">
+        <div class="form-group">
+            {% csrf_token %}
+
+            {{ form|crispy }}
+        </div>
+        <button type="submit" class="btn btn-success">Register</button>
+        <a href="{% url 'index' %}" class="btn btn-light">Cancel</a>
+    </form>
+
+{% endblock %}
