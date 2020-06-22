@@ -45,6 +45,12 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tests:list' %}" tabindex="-1" aria-disabled="true">Test list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'leader_board' %}" tabindex="-1" aria-disabled="true">Leader board</a>
+                </li>
             </ul>
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}

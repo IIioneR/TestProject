@@ -19,10 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from user_account import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('account/', include('user_account.urls'), name='account'),
+    path('tests/', include('test_set.urls'), name='test'),
+    path('leader_board/', views.LeaderBoardListView.as_view(), name='leader_board'),
 ]
 
 urlpatterns +=   \
