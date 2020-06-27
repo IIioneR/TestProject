@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}
-    {{ block.super }}
-    Question #{{ question.number }}: <b>{{ question.text }}</b> ?
-{% endblock %}
-
 
 {% block content %}
+    {% block title %}
+        {{ block.super }}
+        Question #{{ question.number }}: <b>{{ question.text }}</b> ?
+    {% endblock %}
     <form method="post">
         {% csrf_token %}
         {% for answer in answers %}
             <div class="checkbox">
-              <label><input type="checkbox" name="{{ forloop.counter }}" value="1">   {{ answer }}</label>
+              <label><input type="checkbox" name="{{ prefix }} {{ forloop.counter }}" value="1">   {{ answer }}</label>
             </div>
         {% endfor %}
 

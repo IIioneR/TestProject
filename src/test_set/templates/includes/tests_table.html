@@ -16,6 +16,7 @@
           <th>Title</th>
           <th>Description</th>
           <th>Level</th>
+            <th> </th>
         </tr>
         </thead>
         {% for test in tests_list %}
@@ -27,6 +28,7 @@
               <td> {{ test.title }}</td>
               <td> {{ test.description }}</td>
               <td> {{ test.level }}</td>
+              <td> <a href="{% url 'tests:start' test.id %}" >Start</a></td>
             </tr>
         {% endfor %}
     </table>
