@@ -70,6 +70,7 @@ class TestResult(models.Model):
     test = models.ForeignKey(to=Test, related_name='test_results', on_delete=models.CASCADE)
     datetime_run = models.DateTimeField(auto_now_add=True)
     is_completed = models.BooleanField(default=False)
+    is_new = models.BooleanField(default=True)
     avr_score = models.DecimalField(default=0.0, max_digits=6, decimal_places=2)
 
     def update_score(self):
@@ -82,9 +83,22 @@ class TestResult(models.Model):
             for entry in qs
         )
 
+    def question_true_answers(self):
+        qs = self.test_result_details.values('question').annotate(
+            num_answers=Count('question'),
+            score=Sum('is_correct')
+        )
+        return sum(e['num_answers'] == int(e['score']) for e in qs)
+
+    def percent_true_answers(self):
+        num_questions = self.test.questions_count()
+        correct = self.question_true_answers()
+        result = correct / num_questions * 100
+        return result
+
     def finish(self):
         self.update_score()
-        self.is_complete = True
+        self.is_completed = True
 
     def str(self):
         return f'{self.test.title}, {self.user.full_name()}, {self.datetime_run}'
@@ -98,3 +112,9 @@ class TestResultDetail(models.Model):
 
     def __str__(self):
         return f'{self.question.text}'
+
+
+class TestSale(models.Model):
+    store_id = models.PositiveSmallIntegerField()
+    sold_on = models.DateField(auto_now_add=True)
+    sum = models.DecimalField(max_digits=6, decimal_places=2)

@@ -11,7 +11,7 @@
         {% csrf_token %}
         {% for answer in answers %}
             <div class="checkbox">
-              <label><input type="checkbox" name="{{ prefix }} {{ forloop.counter }}" value="1">   {{ answer }}</label>
+              <label><input type="checkbox" name="{{ prefix }}{{ forloop.counter }}" value="1">   {{ answer }}</label>
             </div>
         {% endfor %}
 

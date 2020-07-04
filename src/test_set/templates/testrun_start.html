@@ -2,62 +2,60 @@
 {% load crispy_forms_tags %}
 
 
-
-
-
 {% block content %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>{{ test.title }}</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Num of questions</td>
-                        <td>{{ question_count }}</td>
-                      </tr>
-                      <tr>
-                        <td>Num of runs</td>
-                        <td>{{ number_runs }}</td>
-                      </tr>
-                      <tr>
-                        <td>Best result</td>
-                        <td>{{ best_r }} ( {{ best_user_r }} )</td>
-                      </tr>
-                      <tr>
-                        <td>Last run</td>
-                        <td>{{ test.last_run }}</td>
-                      </tr>
-                    {% if not new %}
-                      <tr>
-                        <td>Current open run</td>
-                        <td>{{ test_result.datetime_run }}</td>
-                      </tr>
-                    {% endif %}
-                    </tbody>
-                  </table>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>{{ test.title }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Num of questions</td>
+                    <td>{{ question_count }}</td>
+                </tr>
+                <tr>
+                    <td>Num of runs</td>
+                    <td>{{ number_runs }}</td>
+                </tr>
+                <tr>
+                    <td>Best result</td>
+                    <td>{{ best_r }} ( {{ best_user_r }} )</td>
+                </tr>
+                <tr>
+                    <td>Last run</td>
+                    <td>{{ test.last_run }}</td>
+                </tr>
+                {% if not new %}
+                <tr>
+                    <td>Current open run</td>
+                    <td>{{ test_result.datetime_run }}</td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm">
+            <div class="d-flex justify-content-center">
+                <img class="rounded-circle p-1 m-1" width="350" height="350" src="{{ test.image.url }}">
             </div>
-                     <div class="col-sm">
-                <div class="d-flex justify-content-center">
-                    <img class="rounded-circle p-1 m-1" width="350" height="350"  src="{{ test.image.url }}">
-                </div>
 
-{#                {% if new %}#}
+            {% if test_result.is_new %}
                     <div class="d-flex justify-content-center mt-5 mb-5" >
-                        <a href="{% url 'tests:testrun_step' pk=test.id seq_nr=1 %}" type="button" class="btn-lg btn-success">START ▶️</a>
+                        <a href="{% url 'tests:next' pk=test.id %}" type="button" class="btn-lg btn-success">START ▶️</a>
                     </div>
-{#                {% else %}#}
-{#                    <div class="d-flex justify-content-center mt-5 mb-5" >#}
-{#                        <a href="{% url 'tests:testrun_step' pk=test.id seq_nr=testrun.last_question_number|add:1 %}" type="button" class="btn-lg btn-warning">CONTINUE️</a>#}
-{#                    </div>#}
-{#                {% endif %}#}
-            </div>
+                {% else %}
+                    <div class="d-flex justify-content-center mt-5 mb-5" >
+                        <a href="{% url 'tests:next' pk=test.id %}" type="button" class="btn-lg btn-warning">CONTINUE ▶️</a>
+                    </div>
+                {% endif %}
+
         </div>
     </div>
+</div>
 {% endblock %}
