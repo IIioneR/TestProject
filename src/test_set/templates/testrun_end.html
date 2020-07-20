@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+
+
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>{{ test.title }}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Correct answers</td>
+                        <td>{{test_result.question_true_answers}} of {{questions_count}} ({{test_result.percent_true_answers}}%)</td>
+                      </tr>
+                      <tr>
+                        <td>Avr score</td>
+                        <td>{{ test_result.avr_score }}</td>
+                      </tr>
+                      <tr>
+                        <td>Time spent</td>
+                        <td>{{ time_spent }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div class="col-sm">
+                <div class="d-flex justify-content-center">
+                    <img class="rounded-circle p-1 m-1" width="350" height="350"  src="{{ test.image.url }}">
+                </div>
+                    <div class="d-flex justify-content-center mt-5 mb-5" >
+                        <a href="{% url 'tests:list' %}" type="button" class="btn-lg btn-success">START ANOTHER TEST ▶️</a>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
