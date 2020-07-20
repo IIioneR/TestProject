@@ -108,13 +108,10 @@ class TestResultDetail(models.Model):
     test_result = models.ForeignKey(to=TestResult, related_name='test_result_details', on_delete=models.CASCADE)
     question = models.ForeignKey(to=Question, null=True, blank=True, on_delete=models.CASCADE)
     answer = models.ForeignKey(to=Answer, on_delete=models.CASCADE)
-    is_correct = models.BooleanField(default=False)
+    is_correct = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(1)],
+        default=0
+    )
 
     def __str__(self):
         return f'{self.question.text}'
-
-
-class TestSale(models.Model):
-    store_id = models.PositiveSmallIntegerField()
-    sold_on = models.DateField(auto_now_add=True)
-    sum = models.DecimalField(max_digits=6, decimal_places=2)
