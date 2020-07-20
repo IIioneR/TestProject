@@ -1,23 +1,31 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load math %}
 
 
 {% block content %}
-    {% block title %}
-        {{ block.super }}
-        Question #{{ question.number }}: <b>{{ question.text }}</b> ?
-    {% endblock %}
-    <form method="post">
-        {% csrf_token %}
-        {% for answer in answers %}
-            <div class="checkbox">
-              <label><input type="checkbox" name="{{ prefix }}{{ forloop.counter }}" value="1">   {{ answer }}</label>
-            </div>
-        {% endfor %}
+{% block title %}
+{{ block.super }}
+Question #{{ question.number }}/{{ question.test.questions_count}}: <b>{{ question.text }}</b> ?
+<div class="progress mt-4">
+    {% expr '(1% - 2)/%2*100' question.number question.test.questions_count as percent%}
+<!--    {% with percent=question.number|add:-1|div:question.test.questions_count|mult:100%}-->
+    <div class="progress-bar" role="progressbar" style="width: {{percent}}%" aria-valuenow="25" aria-valuemin="0"
+         aria-valuemax="100"></div>
+<!--    {% endwith %}-->
+</div>
+{% endblock %}
+<form method="post">
+    {% csrf_token %}
+    {% for answer in answers %}
+    <div class="checkbox">
+        <label><input type="checkbox" name="{{ prefix }}{{ forloop.counter }}" value="1"> {{ answer }}</label>
+    </div>
+    {% endfor %}
 
-        <button type="submit" class="btn btn-success">Submit</button>
-        <a href="#" class="btn btn-light"><< Previous</a>
-        <a href="#" class="btn btn-light">Next >></a>
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a href="#" class="btn btn-light"><< Previous</a>
+    <a href="#" class="btn btn-light">Next >></a>
 
-    </form>
+</form>
 {% endblock %}

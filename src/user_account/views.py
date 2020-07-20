@@ -4,7 +4,7 @@ from django.template.defaultfilters import urlencode
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 
-from app import settings
+from django.conf import settings
 from user_account.forms import UserAccountRegistrationForm, UserAccountProfileForm
 from user_account.models import User
 
