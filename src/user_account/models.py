@@ -20,8 +20,10 @@ class User(AbstractUser):
         return self.avr_score
 
     def last_launch(self):
-        datetime_run = self.test_results.order_by('-datetime_run').first().datetime_run
-        return datetime_run
+        if self.test_results.count() != 0:
+            return self.test_results.last().datetime_run
+        else:
+            return "_____"
 
     def num_runs(self):
         num_runs = self.test_results.count()

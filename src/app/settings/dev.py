@@ -4,6 +4,6 @@ from app.settings.components.dev_tools import * # noqa
 
 DEBUG = True
 
-STATIC_ROOT =os.path.join(BASE_DIR, 'static_cdn')
+STATIC_ROOT =os.path.join(BASE_DIR, 'cdn/static')
 
 print('')
