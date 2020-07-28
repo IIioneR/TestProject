@@ -19,8 +19,6 @@ class TestModelTest(TestCase):
         self.assertEqual(test.questions_count(), 1)
 
     def test_last_run(self):
-
-
         test = Test.objects.first()
         dt = datetime.datetime.strptime('2020-07-01T07:49:51.573Z', "%Y-%m-%dT%H:%M:%S.%fz")
         self.assertEqual(test.last_run().replace(tzinfo=None), dt)

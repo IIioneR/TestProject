@@ -96,6 +96,8 @@ class TestRunView(View):
             request.session['testresult_step'] = testresult_step + 1
             return redirect(reverse('tests:next', kwargs={'pk': pk}))
         else:
+            del request.session['testresult']
+            del request.session['testresult_step']
             current_test_result.finish()
             current_test_result.save()
             questions_count = test.questions_count()
