@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.mail import send_mail
 from django.template.defaultfilters import urlencode
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, FormView
 
 from django.conf import settings
-from user_account.forms import UserAccountRegistrationForm, UserAccountProfileForm
+from user_account.forms import UserAccountRegistrationForm, UserAccountProfileForm, ContactUs
 from user_account.models import User
 
 
@@ -62,3 +63,24 @@ class LeaderBoardListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(object_list=None, **kwargs)
         context['title'] = 'Leader Board'
         return context
+
+
+class ContactUsView(FormView):
+    template_name = 'contact_us.html'
+    extra_context = {'title': 'Send us a message!'}
+    success_url = reverse_lazy('index')
+    form_class = ContactUs
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            send_mail(
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message'],
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)

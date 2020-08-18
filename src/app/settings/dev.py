@@ -4,6 +4,8 @@ from app.settings.components.dev_tools import *  # noqa
 
 DEBUG = True
 
-STATIC_ROOT = 'var/www/TestProject/static'
+
+STATIC_ROOT = '/var/www/TestProject/static'
+MEDIA_ROOT = '/var/www/TestProject/media'
 
 print('')
