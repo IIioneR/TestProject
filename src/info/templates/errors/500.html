@@ -1,0 +1,20 @@
+{% extends 'errors/base.html' %}
+{% load static %}
+
+{% block style %}
+    {{block.super}}
+    <link rel="stylesheet" href="{% static 'info/css/500.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+    <div class="message">
+        <h1>500</h1>
+        <h3>Server Error</h3>
+        <h2>It's not you, it's me.</h2>
+        <!-- use window.history.back(); to go back -->
+        <button><a href="{% url 'index' %}">Go Back</a></button>
+    </div>
+
+{% endblock %}

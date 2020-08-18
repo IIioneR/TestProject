@@ -51,11 +51,15 @@
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'account:contact_us' %}">Contact Us <span class="sr-only">(current)</span></a>
+                </li>
                 {% if user.is_authenticated %}
                 <div class="img-circle.vert">
                     <img class="rounded-circle p-1 m-1" width="30" height="30" src="{{ user.image.url }}">
                 </div>
                 </li>
+
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'account:profile' %}">Profile <span class="sr-only">(current)</span></a>
                 </li>

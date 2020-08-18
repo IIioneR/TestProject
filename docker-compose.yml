@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+
+  backend:
+    build: ./
+    container_name: backend
+    restart: always
+    command: python manage.py runserver 0:8006
+    ports:
+      - 8006:8006
+    volumes:
+      - static_content:/var/www/TestProject
+      - ./src:/opt/project
+    env_file:
+      - ./src/app/settings/.env
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: "postgres:12"
+    container_name: postgresql
+    restart: always
+    env_file:
+      - ./src/app/settings/.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD='adminadmin'
+
+  nginx:
+    image: nginx:1.18-alpine
+    container_name: nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_content:/var/www/TestProject
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata: {}
+  static_content: {}
+  media_content: {}

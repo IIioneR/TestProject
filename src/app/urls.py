@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from django.conf.urls import handler400, handler403, handler404, handler500
 
 from user_account import views
 
@@ -37,3 +38,9 @@ if settings.DEBUG:
     urlpatterns = [
         path('debug/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
+
+handler400 = 'info.views.error400'
+handler403 = 'info.views.error403'
+handler404 = 'info.views.error404'
+handler500 = 'info.views.error500'
